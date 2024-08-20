@@ -27,8 +27,12 @@
   "license": "BSD-2-Clause",
   "devDependencies": {
     "@osjs/dev-meta": "^2.1.0",
+    "core-js": "^3.38.0",
+    "element-remove": "^1.0.4",
     "html-webpack-plugin": "^3.2.0",
-    "source-map-loader": "^0.2.4"
+    "regenerator-runtime": "^0.14.1",
+    "source-map-loader": "^0.2.4",
+    "whatwg-fetch": "^3.6.20"
   },
   "dependencies": {
     "@osjs/calculator-application": "^1.2.8",

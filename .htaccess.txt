@@ -1,0 +1,35 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Ensure the default file to serve
+DirectoryIndex index.html
+
+# Redirect all traffic to index.html (for Single Page Applications)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.html [L,QSA]
+
+# Handle WebSocket connections
+RewriteCond %{HTTP:UPGRADE} ^WebSocket$ [NC]
+RewriteCond %{HTTP:CONNECTION} Upgrade$ [NC]
+RewriteRule .* ws://localhost:8000%{REQUEST_URI} [P]
+
+# Proxying to the Node.js backend
+RewriteRule ^(.*)$ http://localhost:8000/$1 [P,L]
+
+# Enable gzip compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Protect .htaccess file from being viewed
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Disable server signature
+ServerSignature Off
